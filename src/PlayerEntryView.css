@@ -1,0 +1,22 @@
+.playerEntryView {
+  display: flex;
+  flex-direction: column;
+}
+
+#playerEntryMain {
+  display: flex;
+  flex-direction: row;
+}
+
+.playerEntry {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  color: white;
+}
+
+.matchInformation {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}

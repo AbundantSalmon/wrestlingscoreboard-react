@@ -1,0 +1,1 @@
+type CapitaliseString = (s:string) => string;
