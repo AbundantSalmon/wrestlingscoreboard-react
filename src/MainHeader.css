@@ -1,0 +1,21 @@
+#mainHeader {
+  height: 5%;
+  background-color: gold;
+  display: flex;
+  color: black;
+  text-align: center;
+  justify-content: center;
+  font-size: xxx-large;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 1400px) {
+  #fedName {
+    display: none;
+  }
+
+  #logo img {
+    max-width: 100%;
+  }
+}

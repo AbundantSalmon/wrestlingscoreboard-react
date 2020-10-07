@@ -1,4 +1,4 @@
-import React, { useState, VFC } from 'react';
+import React, { useState } from 'react';
 import './PlayerEntryView.css';
 import { capitaliseString } from './common';
 
@@ -80,6 +80,8 @@ export const PlayerEntryView: React.VFC<PlayerEntryViewProps> = () => {
                 <PlayerEntry playerColour={"red"} />
                 <PlayerEntry playerColour={"blue"} />
                 <MatchInformation />
+            </div>
+            <div id="playerEntrySubmission">
                 <SubmitMatchDetails />
             </div>
         </form>
@@ -261,6 +263,7 @@ type SubmitMatchDetails = {
 const SubmitMatchDetails: React.VFC<SubmitMatchDetails> = () => {
     return (
         <>
+            <button>Confirm</button>
         </>
     );
 };
