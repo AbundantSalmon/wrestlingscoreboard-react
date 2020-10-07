@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/wrestlingscoreboard-react/static/css/main.527eafa0.chunk.css",
+    "main.js": "/wrestlingscoreboard-react/static/js/main.78c859b9.chunk.js",
+    "main.js.map": "/wrestlingscoreboard-react/static/js/main.78c859b9.chunk.js.map",
+    "runtime-main.js": "/wrestlingscoreboard-react/static/js/runtime-main.c99e03b5.js",
+    "runtime-main.js.map": "/wrestlingscoreboard-react/static/js/runtime-main.c99e03b5.js.map",
+    "static/js/2.919eb51a.chunk.js": "/wrestlingscoreboard-react/static/js/2.919eb51a.chunk.js",
+    "static/js/2.919eb51a.chunk.js.map": "/wrestlingscoreboard-react/static/js/2.919eb51a.chunk.js.map",
+    "index.html": "/wrestlingscoreboard-react/index.html",
+    "precache-manifest.d7b15ca8a6ac40b5038f80652f5befcf.js": "/wrestlingscoreboard-react/precache-manifest.d7b15ca8a6ac40b5038f80652f5befcf.js",
+    "service-worker.js": "/wrestlingscoreboard-react/service-worker.js",
+    "static/css/main.527eafa0.chunk.css.map": "/wrestlingscoreboard-react/static/css/main.527eafa0.chunk.css.map",
+    "static/js/2.919eb51a.chunk.js.LICENSE.txt": "/wrestlingscoreboard-react/static/js/2.919eb51a.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c99e03b5.js",
+    "static/js/2.919eb51a.chunk.js",
+    "static/css/main.527eafa0.chunk.css",
+    "static/js/main.78c859b9.chunk.js"
+  ]
+}
