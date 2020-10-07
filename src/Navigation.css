@@ -1,0 +1,19 @@
+#navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.navigationButton {
+  background-color: rgb(255, 215, 0, 1);
+  font-size: large;
+  font-weight: bold;
+  padding: 5% 5%;
+  color: black;
+  height: 2rem;
+  margin: 0;
+  padding: 0;
+  width: 10rem;
+  border-radius: 5px;
+}
