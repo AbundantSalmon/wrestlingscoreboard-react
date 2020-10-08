@@ -1,6 +1,7 @@
 import React from 'react';
 import './Scoreboard.css';
 import { capitaliseString } from './common';
+import { PointsControl, PenaltyControl, PinControl } from './ScoreboardControl';
 
 type ScoreboardProps = {
     visibility: boolean;
@@ -91,52 +92,6 @@ const ScoreBox: React.VFC<ScoreBoxProps> = ({ playerColour }) => {
             <div className={"markerWarning " + capitaliseString(playerColour)}></div>
             <div className={"score " + capitaliseString(playerColour)}>0</div>
             <div className={"shotclock " + capitaliseString(playerColour)}>0:00</div>
-        </div>
-    )
-};
-
-type PointsControlProps = {
-    playerColour: string;
-};
-
-const PointsControl: React.VFC<PointsControlProps> = ({ playerColour }) => {
-
-    return (
-        <div className={"points-control " + playerColour}>
-            <div className={"buttonsRow " + playerColour}>
-                <button value={4}>+5</button>
-                <button value={3}>+4</button>
-                <button value={2}>+2</button>
-                <button value={1}>+1</button>
-                <button value={0}>-1</button>
-            </div>
-        </div>
-    )
-};
-
-type PenaltyControlProps = {
-    playerColour: string;
-};
-
-const PenaltyControl: React.VFC<PenaltyControlProps> = ({ playerColour }) => {
-
-    return (
-        <div className={"penalty " + playerColour}>
-            <button className="shotclockbtn" id={"shotclockbutton" + playerColour}>Shot clock</button>
-            <button className="warning">Warning</button>
-        </div>
-    )
-};
-
-type PinControlProps = {
-    playerColour: string;
-};
-
-const PinControl: React.VFC<PinControlProps> = ({ playerColour }) => {
-
-    return (
-        <div className={"pin " + playerColour}>
-            <button>Pin!</button>
         </div>
     )
 };
