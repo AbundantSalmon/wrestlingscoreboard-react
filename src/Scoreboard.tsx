@@ -9,8 +9,8 @@ type ScoreboardProps = {
 export const Scoreboard: React.VFC<ScoreboardProps> = ({ visibility }) => {
 
     return (
-        <div id="scoreboard" style={visibility ? {} : { visibility: "hidden" }}>
-            <div className="container" id="main-display">
+        <div id="outer">
+            <div id="scoreboard" style={visibility ? {} : { visibility: "hidden" }}>
                 <PlayerDataView playerColour="red" />
                 <MiddleView />
                 <PlayerDataView playerColour="blue" />

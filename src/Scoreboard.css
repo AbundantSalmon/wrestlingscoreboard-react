@@ -1,4 +1,9 @@
-#main-display {
+#outer {
+  display: flex;
+  justify-content: center;
+}
+
+#scoreboard {
   width: 95%;
   height: 100vh;
   background: black;
@@ -7,17 +12,37 @@
   grid-template-rows: 60% 20% 1fr 1fr 1fr;
   grid-gap: 2px;
   grid-template-areas:
-    "left-player left-player time time right-player right-player"
-    "left-score left-score left-score right-score right-score right-score"
+    "left-score left-score time time right-score right-score"
+    "left-player left-player left-player  right-player right-player right-player "
     "left-points-control left-points-control left-points-control right-points-control right-points-control right-points-control"
     "left-penalty-control left-penalty-control left-penalty-control right-penalty-control right-penalty-control right-penalty-control"
     "left-pin left-pin left-pin right-pin right-pin right-pin";
   margin-top: 10px;
   margin-bottom: 40px;
+  --score-button-font-size: 15pt;
+  text-align: center;
+  justify-content: center;
+  padding-top: 0%;
 }
 
 div {
   color: white;
+}
+
+.blue {
+  background: blue;
+}
+
+.red {
+  background-color: red;
+}
+
+.blue button {
+  background: darkblue;
+}
+
+.red button {
+  background: darkred;
 }
 
 button {
@@ -56,30 +81,14 @@ button.timer:disabled {
   font-size: 15vw;
 }
 
-.blue {
-  background: blue;
-}
-
-.red {
-  background-color: red;
-}
-
-.blue button {
-  background: darkblue;
-}
-
-.red button {
-  background: darkred;
-}
-
 .playerData.blue {
   text-align: left;
-  grid-area: right-score;
+  grid-area: right-player;
   border-top-right-radius: 30px;
 }
 
 .blue.scorebox {
-  grid-area: right-player;
+  grid-area: right-score;
   border-radius: 0px 30px 30px 0px;
 }
 
@@ -99,32 +108,6 @@ button.timer:disabled {
 .buttonsRow {
   overflow: hidden;
   white-space: nowrap;
-}
-
-.centerPanel {
-  max-width: 43%;
-  display: inline-block;
-  position: relative;
-  padding: 10px 0;
-  vertical-align: top;
-}
-
-.close {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  background: #fff;
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.container {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  padding-top: 0%;
 }
 
 .firstName,
@@ -149,6 +132,7 @@ button.timer:disabled {
 
 .markerWarning.blue {
   justify-content: left;
+  background: initial;
   padding-left: 20px;
 }
 
@@ -156,11 +140,6 @@ button.timer:disabled {
   justify-content: right;
   background: initial;
   padding-right: 20px;
-}
-
-.matchOrder {
-  background-color: rgb(255, 215, 0, 1);
-  font-size: xx-large;
 }
 
 .middle {
@@ -185,30 +164,6 @@ button.timer:disabled {
   justify-content: center;
 }
 
-.popup {
-  background-color: rgba(0, 0, 0, 0.6);
-  width: 100%;
-  height: 150%;
-  position: absolute;
-  display: none;
-  top: 0px;
-  left: 0px;
-  justify-content: center;
-}
-
-.popup-content {
-  color: black;
-  text-align: center;
-  font-size: 4rem;
-  height: 250px;
-  width: 500px;
-  background: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  position: relative;
-  top: 15%;
-}
-
 .points-control button {
   font-size: min(2vw, var(--score-button-font-size));
   border-radius: 10px;
@@ -228,15 +183,12 @@ button.timer:disabled {
 
 .red.playerData {
   text-align: right;
-  grid-area: left-score;
+  grid-area: left-player;
   border-top-left-radius: 30px;
 }
 
-/* .red moved to top, next to .blue */
-/* .red button moved to top, next to .blue button */
-
 .red.scorebox {
-  grid-area: left-player;
+  grid-area: left-score;
   border-radius: 30px 0px 0px 30px;
 }
 
@@ -251,15 +203,6 @@ button.timer:disabled {
 .red.pin {
   grid-area: left-pin;
   border-bottom-left-radius: 30px;
-}
-
-.resetGame {
-  color: black;
-  height: 2rem;
-  margin: 0;
-  padding: 0;
-  width: 10rem;
-  border-radius: 5px;
 }
 
 .score {
@@ -287,14 +230,6 @@ button.timer:disabled {
   visibility: hidden;
 }
 
-.team {
-  text-align: center;
-  font-size: 2.5em;
-  color: #fff;
-  vertical-align: top;
-  display: inline-block;
-}
-
 .penalty button {
   font-size: min(2vw, var(--score-button-font-size));
   border-radius: 10px;
@@ -318,7 +253,7 @@ button.timer:disabled {
     border-radius: 10px;
   }
 
-  #main-display {
+  #scoreboard {
     grid-template-rows: 40% 10% 1fr 1fr 1fr;
   }
 
