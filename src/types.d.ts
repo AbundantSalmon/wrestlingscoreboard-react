@@ -5,5 +5,13 @@ type MatchInformation = {
     age: string;
     gender: string;
     style: string;
-    weight: number
+    weight: number;
 };
+
+type TotalDisplayState = {
+    mainHeader: boolean;
+    navigation: boolean;
+    playerEntryView: boolean;
+};
+
+type TotalDisplayMethod = [TotalDisplayState, React.Dispatch<React.SetStateAction<TotalDisplayState>>];

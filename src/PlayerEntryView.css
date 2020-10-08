@@ -2,8 +2,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: gray;
+  background-color: #808080;
   color: white;
+  padding: 50px;
 }
 
 #playerEntryMain {

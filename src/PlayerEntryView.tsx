@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './PlayerEntryView.css';
 import { capitaliseString } from './common';
 
@@ -67,24 +67,45 @@ const categories: { [index: string]: { [index: string]: { [index: string]: numbe
 }
 
 type PlayerEntryViewProps = {
-
+    visibility: boolean;
+    totalDisplayMethod: TotalDisplayMethod;
 };
 
-export const PlayerEntryView: React.VFC<PlayerEntryViewProps> = () => {
+const ContextTotalDisplayMethod = React.createContext<TotalDisplayMethod>(undefined!);
+
+export const PlayerEntryView: React.VFC<PlayerEntryViewProps> = ({ visibility, totalDisplayMethod }) => {
     return (
-        <form className="playerEntryView">
-            <div>
-                <h1>Match Details</h1>
+
+        < div style={visibility ? {
+            top: "0",
+            left: "0",
+            width: "100vw",
+            height: "100vh",
+            position: "fixed",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "#8080807E",
+
+        }
+            : { display: "none" }}>
+            <div className="playerEntryView" id="playerEntryView">
+                <div>
+                    <h1>Match Details</h1>
+                </div>
+                <div id="playerEntryMain">
+                    <PlayerEntry playerColour={"red"} />
+                    <PlayerEntry playerColour={"blue"} />
+                    <MatchInformation />
+                </div>
+                <div id="playerEntrySubmission">
+                    <ContextTotalDisplayMethod.Provider value={totalDisplayMethod}>
+                        <SubmitMatchDetails />
+                    </ContextTotalDisplayMethod.Provider>
+                </div>
             </div>
-            <div id="playerEntryMain">
-                <PlayerEntry playerColour={"red"} />
-                <PlayerEntry playerColour={"blue"} />
-                <MatchInformation />
-            </div>
-            <div id="playerEntrySubmission">
-                <SubmitMatchDetails />
-            </div>
-        </form>
+        </div>
+
     );
 
 };
@@ -261,9 +282,12 @@ type SubmitMatchDetails = {
 };
 
 const SubmitMatchDetails: React.VFC<SubmitMatchDetails> = () => {
+    const totalDisplayMethod = useContext(ContextTotalDisplayMethod);
+    const [totalDisplayState, setTotalDisplayState] = totalDisplayMethod;
     return (
         <>
             <button>Confirm</button>
+            <button onClick={() => setTotalDisplayState({ ...totalDisplayState, playerEntryView: false })}>Cancel</button>
         </>
     );
 };
