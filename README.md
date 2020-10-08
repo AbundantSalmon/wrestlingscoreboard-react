@@ -1,6 +1,8 @@
 # Wrestling Scoreboard in React
 This is the [dyota257/wrestlingscoreboard](https://github.com/dyota257/wrestlingscoreboard) reimplemented with react.
 
+Current "working" deployment: https://abundantsalmon.github.io/wrestlingscoreboard-react/
+
 ## Built With
 
 
