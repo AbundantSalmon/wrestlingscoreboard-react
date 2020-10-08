@@ -50,13 +50,18 @@ const App: React.VFC = () => {
   const [matchState, setMatchState] = useState(initalMatchState);
   const matchStateMethod: MatchStateMethod = [matchState, setMatchState];
 
+  const resetCurrentMatch = () => {
+    setMatchPlayerInformation({ ...initalMatchPlayerInformation });
+    setMatchState({ ...initalMatchState });
+  };
+
   console.log(matchState);
   console.log(matchPlayerInformation);
 
   return (
     <>
       <MainHeader visibility={totalDisplayState.mainHeader} />
-      <Navigation visibility={totalDisplayState.navigation} totalDisplayMethod={totalDisplayMethod} />
+      <Navigation visibility={totalDisplayState.navigation} totalDisplayMethod={totalDisplayMethod} resetCurrentMatch={resetCurrentMatch} />
       <PlayerEntryView visibility={totalDisplayState.playerEntryView} totalDisplayMethod={totalDisplayMethod} matchStateMethod={matchStateMethod} matchPlayerInformationMethod={matchPlayerInformationMethod} />
       <Scoreboard visibility={totalDisplayState.scoreboard} matchPlayerInformationMethod={matchPlayerInformationMethod} matchStateMethod={matchStateMethod} />
     </>
