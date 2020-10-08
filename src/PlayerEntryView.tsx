@@ -69,11 +69,54 @@ const categories: { [index: string]: { [index: string]: { [index: string]: numbe
 type PlayerEntryViewProps = {
     visibility: boolean;
     totalDisplayMethod: TotalDisplayMethod;
+    matchStateMethod: MatchStateMethod;
+    matchPlayerInformationMethod: MatchPlayerInformationMethod;
 };
 
 const ContextTotalDisplayMethod = React.createContext<TotalDisplayMethod>(undefined!);
 
-export const PlayerEntryView: React.VFC<PlayerEntryViewProps> = ({ visibility, totalDisplayMethod }) => {
+export const PlayerEntryView: React.VFC<PlayerEntryViewProps> = ({ visibility, totalDisplayMethod, matchStateMethod, matchPlayerInformationMethod }) => {
+    //Store the state of the entered match information
+    const initalMatchInformation: MatchInformation = {
+        mat: "A",
+        age: "6-7 yrs",
+        gender: "N/A",
+        style: "N/A",
+        weight: 19
+    };
+    const [matchInformation, setMatchInformation] = useState(initalMatchInformation);
+    //Store the state of the entered player information
+    const initalPlayerEntries: { [playerColor: string]: MatchPlayer } = {
+        "red": {
+            "playerColor": "red",
+            "firstName": "Red First Name",
+            "lastName": "",
+            "clubName": ""
+        },
+        "blue": {
+            "playerColor": "blue",
+            "firstName": "Blue First Name",
+            "lastName": "",
+            "clubName": ""
+        }
+    }
+
+    const [playerEntries, setPlayerEntries] = useState(initalPlayerEntries);
+
+    const setDetails = () => {
+        //set the matchInformation to the matchState, playerInformation from the App Component and close the playerEntryView
+        const [matchState, setMatchState] = matchStateMethod;
+        const [, setMatchPlayerInformation] = matchPlayerInformationMethod;
+        const [totalDisplayState, setTotalDisplayState] = totalDisplayMethod;
+
+
+        setMatchState({ ...matchState, ...matchInformation, playersSet: true });
+        const copyPlayerEntries = { ...playerEntries };
+        setMatchPlayerInformation(copyPlayerEntries);
+        setTotalDisplayState({ ...totalDisplayState, playerEntryView: false });
+
+    }
+
     return (
 
         < div style={visibility ? {
@@ -94,13 +137,13 @@ export const PlayerEntryView: React.VFC<PlayerEntryViewProps> = ({ visibility, t
                     <h1>Match Details</h1>
                 </div>
                 <div id="playerEntryMain">
-                    <PlayerEntry playerColour={"red"} />
-                    <PlayerEntry playerColour={"blue"} />
-                    <MatchInformation />
+                    <PlayerEntry playerColour={"red"} playerEntries={playerEntries} setPlayerEntries={setPlayerEntries} />
+                    <PlayerEntry playerColour={"blue"} playerEntries={playerEntries} setPlayerEntries={setPlayerEntries} />
+                    <MatchInformation matchInformation={matchInformation} setMatchInformation={setMatchInformation} />
                 </div>
                 <div id="playerEntrySubmission">
                     <ContextTotalDisplayMethod.Provider value={totalDisplayMethod}>
-                        <SubmitMatchDetails />
+                        <SubmitMatchDetails setDetails={setDetails} />
                     </ContextTotalDisplayMethod.Provider>
                 </div>
             </div>
@@ -112,19 +155,36 @@ export const PlayerEntryView: React.VFC<PlayerEntryViewProps> = ({ visibility, t
 
 type PlayerEntryProps = {
     playerColour: string;
-};
+    playerEntries: { [playerColor: string]: MatchPlayer };
+    setPlayerEntries: React.Dispatch<React.SetStateAction<{ [playerColor: string]: MatchPlayer }>>;
+}
 
-const PlayerEntry: React.VFC<PlayerEntryProps> = ({ playerColour }) => {
+const PlayerEntry: React.VFC<PlayerEntryProps> = ({ playerColour, playerEntries, setPlayerEntries }) => {
     return (
         <div className={"playerEntry " + playerColour}>
             <label>
-                {capitaliseString(playerColour)}'s First Name<br /> <input type="text"></input>
+                {capitaliseString(playerColour)}'s First Name<br />
+                <input type="text" value={playerEntries[playerColour].firstName} onChange={e => {
+                    const newPlayerEntry = { ...playerEntries };
+                    newPlayerEntry[playerColour].firstName = e.target.value;
+                    setPlayerEntries(newPlayerEntry as MatchPlayerInformation);
+                }} />
             </label>
             <label>
-                {capitaliseString(playerColour)}'s Last Name<br /> <input type="text"></input>
+                {capitaliseString(playerColour)}'s Last Name<br />
+                <input type="text" value={playerEntries[playerColour].lastName} onChange={e => {
+                    const newPlayerEntry = { ...playerEntries };
+                    newPlayerEntry[playerColour].lastName = e.target.value;
+                    setPlayerEntries(newPlayerEntry as MatchPlayerInformation);
+                }} />
             </label>
             <label>
-                {capitaliseString(playerColour)}'s Club Name<br /> <input type="text"></input>
+                {capitaliseString(playerColour)}'s Club Name<br />
+                <input type="text" value={playerEntries[playerColour].clubName} onChange={e => {
+                    const newPlayerEntry = { ...playerEntries };
+                    newPlayerEntry[playerColour].clubName = e.target.value;
+                    setPlayerEntries(newPlayerEntry as MatchPlayerInformation);
+                }} />
             </label>
         </div>
     );
@@ -132,20 +192,11 @@ const PlayerEntry: React.VFC<PlayerEntryProps> = ({ playerColour }) => {
 };
 
 type MatchInformationProps = {
-
+    matchInformation: MatchInformation;
+    setMatchInformation: React.Dispatch<React.SetStateAction<MatchInformation>>;
 };
 
-const MatchInformation: React.VFC<MatchInformationProps> = () => {
-    const initalMatchInformation: MatchInformation = {
-        mat: "A",
-        age: "6-7 yrs",
-        gender: "N/A",
-        style: "N/A",
-        weight: 19
-    };
-
-    const [matchInformation, setMatchInformation] = useState(initalMatchInformation);
-
+const MatchInformation: React.VFC<MatchInformationProps> = ({ matchInformation, setMatchInformation }) => {
     const ageOptions = Object.keys(categories).map((value) => <option value={value} key={value}>{value}</option>);
     const genderOptions = Object.keys(categories[matchInformation.age]).map((value) => <option value={value} key={value}>{value}</option>);
     const styleOptions = Object.keys(categories[matchInformation.age][matchInformation.gender]).map((value: string) => <option value={value} key={value}>{value}</option>);
@@ -278,15 +329,15 @@ const MatchInformation: React.VFC<MatchInformationProps> = () => {
 };
 
 type SubmitMatchDetails = {
-
+    setDetails: () => void;
 };
 
-const SubmitMatchDetails: React.VFC<SubmitMatchDetails> = () => {
+const SubmitMatchDetails: React.VFC<SubmitMatchDetails> = ({ setDetails }) => {
     const totalDisplayMethod = useContext(ContextTotalDisplayMethod);
     const [totalDisplayState, setTotalDisplayState] = totalDisplayMethod;
     return (
         <>
-            <button>Confirm</button>
+            <button onClick={setDetails}>Confirm</button>
             <button onClick={() => setTotalDisplayState({ ...totalDisplayState, playerEntryView: false })}>Cancel</button>
         </>
     );
