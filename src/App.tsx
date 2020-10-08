@@ -18,15 +18,15 @@ const initalTotalDisplayState: TotalDisplayState = {
 const initalMatchPlayerInformation: MatchPlayerInformation = {
   red: {
     "playerColor": "red",
-    "firstName": "",
-    "lastName": "",
-    "clubName": ""
+    "firstName": "firstName",
+    "lastName": "lastName",
+    "clubName": "clubName"
   },
   blue: {
     "playerColor": "blue",
-    "firstName": "",
-    "lastName": "",
-    "clubName": ""
+    "firstName": "firstName",
+    "lastName": "lastName",
+    "clubName": "clubName"
   }
 };
 
@@ -58,7 +58,7 @@ const App: React.VFC = () => {
       <MainHeader visibility={totalDisplayState.mainHeader} />
       <Navigation visibility={totalDisplayState.navigation} totalDisplayMethod={totalDisplayMethod} />
       <PlayerEntryView visibility={totalDisplayState.playerEntryView} totalDisplayMethod={totalDisplayMethod} matchStateMethod={matchStateMethod} matchPlayerInformationMethod={matchPlayerInformationMethod} />
-      <Scoreboard visibility={totalDisplayState.scoreboard} />
+      <Scoreboard visibility={totalDisplayState.scoreboard} matchPlayerInformationMethod={matchPlayerInformationMethod} matchStateMethod={matchStateMethod} />
     </>
   );
 }
