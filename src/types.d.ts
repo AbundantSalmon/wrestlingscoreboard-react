@@ -12,6 +12,7 @@ type TotalDisplayState = {
     mainHeader: boolean;
     navigation: boolean;
     playerEntryView: boolean;
+    scoreboard: boolean;
 };
 
 type TotalDisplayMethod = [TotalDisplayState, React.Dispatch<React.SetStateAction<TotalDisplayState>>];

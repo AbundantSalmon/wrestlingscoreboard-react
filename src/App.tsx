@@ -4,12 +4,15 @@ import './App.css';
 import { PlayerEntryView } from './PlayerEntryView';
 import { MainHeader } from './MainHeader';
 import { Navigation } from './Navigation';
+import { Scoreboard } from './Scoreboard';
+
 //import Timer from 'easytimer.js';
 
 const initalTotalDisplayState: TotalDisplayState = {
   mainHeader: true,
   navigation: true,
-  playerEntryView: false
+  playerEntryView: false,
+  scoreboard: true,
 };
 
 const App: React.VFC = () => {
@@ -22,6 +25,7 @@ const App: React.VFC = () => {
       <MainHeader visibility={totalDisplayState.mainHeader} />
       <Navigation visibility={totalDisplayState.navigation} totalDisplayMethod={totalDisplayMethod} />
       <PlayerEntryView visibility={totalDisplayState.playerEntryView} totalDisplayMethod={totalDisplayMethod} />
+      <Scoreboard visibility={totalDisplayState.scoreboard} />
     </>
   );
 }
