@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import Timer from 'easytimer.js';
+import 'fontsource-roboto';
 
 import { PlayerEntryView } from './PlayerEntryView';
 import { MainHeader } from './MainHeader';
