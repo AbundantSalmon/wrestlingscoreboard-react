@@ -14,9 +14,10 @@ type ScoreboardProps = {
     matchPlayerInformationMethod: MatchPlayerInformationMethod;
     matchStateMethod: MatchStateMethod;
     timer: Timer;
+    Victory: Victory;
 };
 
-export const Scoreboard: React.VFC<ScoreboardProps> = ({ visibility, matchPlayerInformationMethod, matchStateMethod, timer }) => {
+export const Scoreboard: React.VFC<ScoreboardProps> = ({ visibility, matchPlayerInformationMethod, matchStateMethod, timer, Victory }) => {
 
     const [matchPlayerInformation, setMatchPlayerInformation] = matchPlayerInformationMethod;
     const [matchState, setMatchState] = matchStateMethod;
@@ -60,6 +61,7 @@ export const Scoreboard: React.VFC<ScoreboardProps> = ({ visibility, matchPlayer
             if (!(newMatchPlayerInformation[player].score === 0 && score < 0)) { //make sure score can't go below 0
                 newMatchPlayerInformation[player].score += score;
                 setMatchPlayerInformation(newMatchPlayerInformation);
+                checkVictoryState(matchPlayerInformation, matchState, timer, Victory);
             }
         }
     };
@@ -68,7 +70,7 @@ export const Scoreboard: React.VFC<ScoreboardProps> = ({ visibility, matchPlayer
         <div id="outer">
             <div id="scoreboard" style={visibility ? {} : { visibility: "hidden" }}>
                 <PlayerDataView playerColour="red" matchPlayerInformation={matchPlayerInformation} />
-                <MiddleView matchState={matchState} setMatchState={setMatchState} timer={timer} />
+                <MiddleView matchState={matchState} setMatchState={setMatchState} timer={timer} matchPlayerInformation={matchPlayerInformation} Victory={Victory} />
                 <PlayerDataView playerColour="blue" matchPlayerInformation={matchPlayerInformation} />
                 <ScoreBox playerColour="red" matchPlayerInformation={matchPlayerInformation} />
                 <ScoreBox playerColour="blue" matchPlayerInformation={matchPlayerInformation} />
@@ -87,9 +89,11 @@ type MiddleViewProps = {
     matchState: MatchState;
     timer: Timer;
     setMatchState: React.Dispatch<React.SetStateAction<MatchState>>;
+    matchPlayerInformation: MatchPlayerInformation;
+    Victory: Victory;
 };
 
-const MiddleView: React.VFC<MiddleViewProps> = ({ matchState, timer, setMatchState }) => {
+const MiddleView: React.VFC<MiddleViewProps> = ({ matchState, timer, setMatchState, matchPlayerInformation, Victory }) => {
 
     const playButtonPress = () => {
         let initialTimerValue = 0;
@@ -109,7 +113,8 @@ const MiddleView: React.VFC<MiddleViewProps> = ({ matchState, timer, setMatchSta
             setMatchState({ ...matchState, phase: phases[5], paused: false })
             timer.start({ countdown: true, startValues: { seconds: initialTimerValue } });
         } else if (matchState.phase === phases[6] && matchState.started) { //if end of period 2
-            console.log(`Match has ended`)
+            console.log(`Match has ended`);
+            checkVictoryState(matchPlayerInformation, matchState, timer, Victory);
         } else if (matchState.started && !matchState.paused) { //pause
             setMatchState({ ...matchState, paused: true })
             timer.pause();
@@ -119,7 +124,6 @@ const MiddleView: React.VFC<MiddleViewProps> = ({ matchState, timer, setMatchSta
         }
     }
 
-    console.log(matchState.phase + " " + timer.isPaused() + " " + timer.isRunning());
     return (
         <div className="middle" style={matchState.paused ? { backgroundColor: "grey" } : {}}>
             <span id="period">{matchState.phase}</span><br />
@@ -166,4 +170,36 @@ const ScoreBox: React.VFC<ScoreBoxProps> = ({ playerColour, matchPlayerInformati
             <div className={"shotclock " + capitaliseString(playerColour)}>0:00</div>
         </div>
     )
+};
+
+const checkVictoryState = (matchPlayerInformation: MatchPlayerInformation, matchState: MatchState, timer: Timer, Victory: Victory) => { //Resolves victory conditions
+    // Intra Time Victory Conditions
+    let technicalSuperiorityThreshold = 10;
+    if (matchState.style === "Greco-Roman") {
+        // Greco-Roman Technical Superiority
+        technicalSuperiorityThreshold = 8;
+    } else if (matchState.style === "Freestyle") {
+        // Freestyle Technical Superiority
+        technicalSuperiorityThreshold = 10;
+    }
+
+    if (matchPlayerInformation.blue.score - matchPlayerInformation.red.score >= technicalSuperiorityThreshold) {
+        timer.pause();
+        Victory("blue", "technical superiority");
+    } else if (matchPlayerInformation.red.score - matchPlayerInformation.blue.score >= technicalSuperiorityThreshold) {
+        timer.pause();
+        Victory("red", "technical superiority");
+    }
+
+    //End of Time Victory Check
+    if (matchState.phase === phases[6]) {
+        if (matchPlayerInformation.blue.score === matchPlayerInformation.red.score) {
+            Victory("draw", "points");
+            console.log("Outcome is draw")
+        } else if (matchPlayerInformation.blue.score - matchPlayerInformation.red.score > 0) {
+            Victory("blue", "points");
+        } else {
+            Victory("red", "points");
+        }
+    }
 };

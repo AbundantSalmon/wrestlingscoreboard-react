@@ -1,4 +1,5 @@
 type CapitaliseString = (s:string) => string;
+type Victory = (player: string, reason: string) => void;
 
 type MatchState = {
     mat: string,
@@ -41,6 +42,7 @@ type TotalDisplayState = {
     navigation: boolean;
     playerEntryView: boolean;
     scoreboard: boolean;
+    victoryScreen:boolean;
 };
 
 type TotalDisplayMethod = [TotalDisplayState, React.Dispatch<React.SetStateAction<TotalDisplayState>>];
