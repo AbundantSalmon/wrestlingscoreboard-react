@@ -1,0 +1,9 @@
+.victoryScreenView {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #808080;
+  color: white;
+  padding: 50px;
+  font-size: 40px;
+}

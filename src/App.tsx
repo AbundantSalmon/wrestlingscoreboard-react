@@ -49,6 +49,12 @@ const initialMatchState: MatchState = {
   phase: "Before Match"
 };
 
+const initialVictoryState: VictoryState = {
+  playerName: "",
+  playerColour: "",
+  reason: ""
+};
+
 const App: React.VFC = () => {
   const [totalDisplayState, setTotalDisplayState] = useState(initialTotalDisplayState);
   const totalDisplayMethod: TotalDisplayMethod = [totalDisplayState, setTotalDisplayState];
@@ -60,6 +66,7 @@ const App: React.VFC = () => {
   const matchStateMethod: MatchStateMethod = [matchState, setMatchState];
 
   const [timer,] = useState(new Timer());
+  const [victoryState, setVictoryState] = useState(initialVictoryState);
 
   const ResetCurrentMatch = () => {
     setMatchPlayerInformation({ ...initialMatchPlayerInformation });
@@ -68,8 +75,20 @@ const App: React.VFC = () => {
   };
 
   const Victory = (player: string, reason: string) => {
-    setTotalDisplayState({ ...totalDisplayState, victoryScreen: true })
+    const playerInfo: { [playerColor: string]: MatchPlayer } = { ...matchPlayerInformation };
+    setTotalDisplayState({ ...totalDisplayState, victoryScreen: true });
+    if (player === "draw") {
+      setVictoryState({ ...victoryState, reason: reason, playerColour: player, playerName: player });
+    } else {
+      setVictoryState({ ...victoryState, reason: reason, playerColour: player, playerName: `${playerInfo[player].firstName} ${playerInfo[player].lastName}` });
+    }
   }
+
+  const SetVisibilityOf = (component: string, state: boolean) => {
+    const newTotalDisplayState: { [value: string]: boolean } = { ...totalDisplayState };
+    newTotalDisplayState[component] = state;
+    setTotalDisplayState(newTotalDisplayState as TotalDisplayState);
+  };
 
   console.log(matchState);
   console.log(matchPlayerInformation);
@@ -80,7 +99,7 @@ const App: React.VFC = () => {
       <Navigation visibility={totalDisplayState.navigation} totalDisplayMethod={totalDisplayMethod} ResetCurrentMatch={ResetCurrentMatch} />
       <PlayerEntryView visibility={totalDisplayState.playerEntryView} totalDisplayMethod={totalDisplayMethod} matchStateMethod={matchStateMethod} matchPlayerInformationMethod={matchPlayerInformationMethod} />
       <Scoreboard visibility={totalDisplayState.scoreboard} matchPlayerInformationMethod={matchPlayerInformationMethod} matchStateMethod={matchStateMethod} timer={timer} Victory={Victory} />
-      <VictoryScreen visibility={totalDisplayState.victoryScreen} />
+      <VictoryScreen visibility={totalDisplayState.victoryScreen} victoryState={victoryState} SetVisibilityOf={SetVisibilityOf} />
     </>
   );
 }

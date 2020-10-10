@@ -185,21 +185,21 @@ const checkVictoryState = (matchPlayerInformation: MatchPlayerInformation, match
 
     if (matchPlayerInformation.blue.score - matchPlayerInformation.red.score >= technicalSuperiorityThreshold) {
         timer.pause();
-        Victory("blue", "technical superiority");
+        Victory("blue", "Technical Superiority");
     } else if (matchPlayerInformation.red.score - matchPlayerInformation.blue.score >= technicalSuperiorityThreshold) {
         timer.pause();
-        Victory("red", "technical superiority");
+        Victory("red", "Technical Superiority");
     }
 
     //End of Time Victory Check
     if (matchState.phase === phases[6]) {
         if (matchPlayerInformation.blue.score === matchPlayerInformation.red.score) {
-            Victory("draw", "points");
-            console.log("Outcome is draw")
+            Victory("draw", "Points");
+            console.log("Outcome is draw");
         } else if (matchPlayerInformation.blue.score - matchPlayerInformation.red.score > 0) {
-            Victory("blue", "points");
+            Victory("blue", "Points");
         } else {
-            Victory("red", "points");
+            Victory("red", "Points");
         }
     }
 };

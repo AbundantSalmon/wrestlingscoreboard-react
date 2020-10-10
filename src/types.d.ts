@@ -45,6 +45,12 @@ type TotalDisplayState = {
     victoryScreen:boolean;
 };
 
+type VictoryState = {
+  playerName: string;
+  playerColour: string;
+  reason: string;
+};
+
 type TotalDisplayMethod = [TotalDisplayState, React.Dispatch<React.SetStateAction<TotalDisplayState>>];
 type MatchPlayerInformationMethod = [MatchPlayerInformation, Dispatch<SetStateAction<MatchPlayerInformation>>];
 type MatchStateMethod = [MatchState, Dispatch<SetStateAction<MatchState>>];
