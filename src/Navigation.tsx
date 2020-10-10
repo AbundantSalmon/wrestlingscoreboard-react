@@ -1,3 +1,5 @@
+import { ButtonGroup } from '@material-ui/core';
+import Button from '@material-ui/core/Button/Button';
 import React from 'react';
 import './Navigation.css';
 
@@ -14,12 +16,14 @@ export const Navigation: React.VFC<NavigationProps> = ({ visibility, totalDispla
 
     return (
         <div id="navigation" style={visibility ? {} : { visibility: "hidden" }}>
-            <button className="navigationButton" id="setMatchButton" onClick={() => setTotalDisplayState({ ...totalDisplayState, playerEntryView: true })}>Set Match</button>
-            <button className="navigationButton" id="resetMatchButton" onClick={() => ResetCurrentMatch()}>Reset All</button>
-            <button className="navigationButton" id="importButton" disabled style={{ opacity: 0.5 }}>Import</button>
-            <button className="navigationButton" id="fixturesButton" disabled style={{ opacity: 0.5 }}>Fixtures</button>
-            <button className="navigationButton" id="prevButton" disabled style={{ opacity: 0.5 }}>{"<<"}</button>
-            <button className="navigationButton" id="nextButton" disabled style={{ opacity: 0.5 }}>{">>"}</button>
+            <ButtonGroup color="primary" size="large" variant="contained">
+                <Button onClick={() => setTotalDisplayState({ ...totalDisplayState, playerEntryView: true })}>Set Match</Button>
+                <Button onClick={() => ResetCurrentMatch()}>Reset All</Button>
+                <Button disabled>Import</Button>
+                <Button disabled>Fixtures</Button>
+                <Button disabled>{"<<"}</Button>
+                <Button disabled>{">>"}</Button>
+            </ButtonGroup>
         </div>
     )
 };

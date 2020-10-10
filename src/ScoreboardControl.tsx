@@ -1,5 +1,6 @@
 //Maintain all control logic and interfaces for scoreboard in this file.
 
+import { Button } from '@material-ui/core';
 import React from 'react';
 import './Scoreboard.css';
 
@@ -12,12 +13,12 @@ export const PointsControl: React.VFC<PointsControlProps> = ({ playerColour, upd
 
     return (
         <div className={"points-control " + playerColour}>
-            <div className={"buttonsRow " + playerColour}>
-                <button onClick={() => updateScore(playerColour, 5)}>+5</button>
-                <button onClick={() => updateScore(playerColour, 4)}>+4</button>
-                <button onClick={() => updateScore(playerColour, 2)}>+2</button>
-                <button onClick={() => updateScore(playerColour, 1)}>+1</button>
-                <button onClick={() => updateScore(playerColour, -1)}>-1</button>
+            <div className="buttonsRow">
+                <Button color="primary" size="medium" variant="contained" style={{ color: "white" }} onClick={() => updateScore(playerColour, 5)}>+5</Button>
+                <Button color="primary" size="medium" variant="contained" style={{ color: "white" }} onClick={() => updateScore(playerColour, 4)}>+4</Button>
+                <Button color="primary" size="medium" variant="contained" style={{ color: "white" }} onClick={() => updateScore(playerColour, 2)}>+2</Button>
+                <Button color="primary" size="medium" variant="contained" style={{ color: "white" }} onClick={() => updateScore(playerColour, 1)}>+1</Button>
+                <Button color="primary" size="medium" variant="contained" style={{ color: "white" }} onClick={() => updateScore(playerColour, -1)}>-1</Button>
             </div>
         </div>
     )
@@ -33,8 +34,8 @@ export const PenaltyControl: React.VFC<PenaltyControlProps> = ({ playerColour, h
 
     return (
         <div className={"penalty " + playerColour}>
-            <button className="shotclockbtn" id={"shotclockbutton" + playerColour} onClick={() => handleShotClockButton(playerColour)}>Shot clock</button>
-            <button className="warning" onClick={() => handleWarningButton(playerColour)}>Warning</button>
+            <Button color="primary" size="medium" variant="contained" style={{ color: "white" }} onClick={() => handleShotClockButton(playerColour)}>Shot Clock</Button>
+            <Button color="primary" size="medium" variant="contained" style={{ color: "white" }} onClick={() => handleWarningButton(playerColour)}>Warning</Button>
         </div>
     )
 };
@@ -48,10 +49,10 @@ export const PinControl: React.VFC<PinControlProps> = ({ playerColour, handlePin
 
     return (
         <div className={"pin " + playerColour}>
-            <button onClick={
+            <Button color="primary" size="medium" variant="contained" style={{ color: "white" }} onClick={
                 () => {
                     handlePinButton(playerColour);
-                }}>Pin!</button>
+                }}>Pin!</Button>
         </div>
     )
 };

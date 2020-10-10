@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import './PlayerEntryView.css';
 import { capitaliseString } from './common';
+import { Button, ButtonGroup, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Paper, Select, TextField } from '@material-ui/core';
 
 const categories: { [index: string]: { [index: string]: { [index: string]: number[] } } } =
 {
@@ -146,35 +147,51 @@ export const PlayerEntryView: React.VFC<PlayerEntryViewProps> = ({ visibility, t
 
     return (
 
-        < div style={visibility ? {
-            top: "0",
-            left: "0",
-            width: "100vw",
-            height: "100vh",
-            position: "fixed",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#8080807E",
+        // < div style={visibility ? {
+        //     top: "0",
+        //     left: "0",
+        //     width: "100vw",
+        //     height: "100vh",
+        //     position: "fixed",
+        //     display: "flex",
+        //     justifyContent: "center",
+        //     alignItems: "center",
+        //     backgroundColor: "#8080807E",
 
-        }
-            : { display: "none" }}>
-            <div className="playerEntryView" id="playerEntryView">
-                <div>
-                    <h1>Match Details</h1>
-                </div>
-                <div id="playerEntryMain">
-                    <PlayerEntry playerColour={"red"} playerEntries={playerEntries} setPlayerEntries={setPlayerEntries} />
-                    <PlayerEntry playerColour={"blue"} playerEntries={playerEntries} setPlayerEntries={setPlayerEntries} />
-                    <MatchInformation matchInformation={matchInformation} setMatchInformation={setMatchInformation} />
-                </div>
-                <div id="playerEntrySubmission">
+        // }
+        //     : { display: "none" }}>
+        //     <div className="playerEntryView" id="playerEntryView">
+        //         <div>
+        //             <h1>Match Details</h1>
+        //         </div>
+        //         
+        //         
+        //     </div>
+        // </div>
+
+        <Dialog open={visibility} maxWidth="lg"  >
+            <DialogTitle style={{ color: "black" }}>Match Details</DialogTitle>
+            <DialogContent>
+                <Grid container id="playerEntryMain" spacing={3} alignItems="stretch" direction="row">
+                    <Grid item xs={4}>
+                        <PlayerEntry playerColour={"red"} playerEntries={playerEntries} setPlayerEntries={setPlayerEntries} />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <PlayerEntry playerColour={"blue"} playerEntries={playerEntries} setPlayerEntries={setPlayerEntries} />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <MatchInformation matchInformation={matchInformation} setMatchInformation={setMatchInformation} />
+                    </Grid>
+                </Grid>
+            </DialogContent>
+            <DialogActions>
+                <ButtonGroup color="primary" size="large" variant="contained">
                     <ContextTotalDisplayMethod.Provider value={totalDisplayMethod}>
                         <SubmitMatchDetails setDetails={setDetails} />
                     </ContextTotalDisplayMethod.Provider>
-                </div>
-            </div>
-        </div>
+                </ButtonGroup>
+            </DialogActions>
+        </Dialog>
 
     );
 
@@ -188,32 +205,34 @@ type PlayerEntryProps = {
 
 const PlayerEntry: React.VFC<PlayerEntryProps> = ({ playerColour, playerEntries, setPlayerEntries }) => {
     return (
-        <div className={"playerEntry " + playerColour}>
-            <label>
-                {capitaliseString(playerColour)}'s First Name<br />
-                <input type="text" value={playerEntries[playerColour].firstName} onChange={e => {
-                    const newPlayerEntry = { ...playerEntries };
-                    newPlayerEntry[playerColour].firstName = e.target.value;
-                    setPlayerEntries(newPlayerEntry);
-                }} />
-            </label>
-            <label>
-                {capitaliseString(playerColour)}'s Last Name<br />
-                <input type="text" value={playerEntries[playerColour].lastName} onChange={e => {
-                    const newPlayerEntry = { ...playerEntries };
-                    newPlayerEntry[playerColour].lastName = e.target.value;
-                    setPlayerEntries(newPlayerEntry);
-                }} />
-            </label>
-            <label>
-                {capitaliseString(playerColour)}'s Club Name<br />
-                <input type="text" value={playerEntries[playerColour].clubName} onChange={e => {
-                    const newPlayerEntry = { ...playerEntries };
-                    newPlayerEntry[playerColour].clubName = e.target.value;
-                    setPlayerEntries(newPlayerEntry);
-                }} />
-            </label>
-        </div>
+        <Paper className={"playerEntry " + playerColour} elevation={3} style={{ height: "90%" }}>
+            <Grid container direction={"column"} spacing={3}>
+                <Grid item style={{ color: playerColour, textAlign: "center" }}>
+                    {capitaliseString(playerColour)}
+                </Grid>
+                <Grid item>
+                    <TextField label={capitaliseString(playerColour) + "'s First Name"} variant="outlined" value={playerEntries[playerColour].firstName} onChange={e => {
+                        const newPlayerEntry = { ...playerEntries };
+                        newPlayerEntry[playerColour].firstName = e.target.value;
+                        setPlayerEntries(newPlayerEntry);
+                    }} />
+                </Grid>
+                <Grid item>
+                    <TextField label={capitaliseString(playerColour) + "'s Last Name"} variant="outlined" value={playerEntries[playerColour].lastName} onChange={e => {
+                        const newPlayerEntry = { ...playerEntries };
+                        newPlayerEntry[playerColour].lastName = e.target.value;
+                        setPlayerEntries(newPlayerEntry);
+                    }} />
+                </Grid>
+                <Grid item>
+                    <TextField label={capitaliseString(playerColour) + "'s Club Name"} variant="outlined" value={playerEntries[playerColour].clubName} onChange={e => {
+                        const newPlayerEntry = { ...playerEntries };
+                        newPlayerEntry[playerColour].clubName = e.target.value;
+                        setPlayerEntries(newPlayerEntry);
+                    }} />
+                </Grid>
+            </Grid>
+        </Paper>
     );
 
 };
@@ -224,26 +243,30 @@ type MatchInformationProps = {
 };
 
 const MatchInformation: React.VFC<MatchInformationProps> = ({ matchInformation, setMatchInformation }) => {
-    const ageOptions = Object.keys(categories).map((value) => <option value={value} key={value}>{value}</option>);
-    const genderOptions = Object.keys(categories[matchInformation.age]).map((value) => <option value={value} key={value}>{value}</option>);
-    const styleOptions = Object.keys(categories[matchInformation.age][matchInformation.gender]).map((value: string) => <option value={value} key={value}>{value}</option>);
-    const weightOptions = categories[matchInformation.age][matchInformation.gender][matchInformation.style].map((value: number) => <option value={value} key={value}>{value}</option>);
+    const ageOptions = Object.keys(categories).map((value) => <MenuItem value={value} key={value}>{value}</MenuItem>);
+    const genderOptions = Object.keys(categories[matchInformation.age]).map((value) => <MenuItem value={value} key={value}>{value}</MenuItem>);
+    const styleOptions = Object.keys(categories[matchInformation.age][matchInformation.gender]).map((value: string) => <MenuItem value={value} key={value}>{value}</MenuItem>);
+    const weightOptions = categories[matchInformation.age][matchInformation.gender][matchInformation.style].map((value: number) => <MenuItem value={value.toString()} key={value}>{value}</MenuItem>);
 
-    const updateDropDowns = (e: React.ChangeEvent<HTMLSelectElement>, dropDown: string) => {
+    const updateDropDowns = (e: React.ChangeEvent<{ name?: string | undefined; value: unknown; }>, dropDown: string) => {
         //resets every subsequent dropdown to the default 0 index value, forces an update of state to ensure that valid options are stored
+        let eTargetValue: string = "";
+        if (typeof e.target.value === "string") {
+            eTargetValue = e.target.value;
+        }
         switch (dropDown) {
             case "mat":
-                setMatchInformation({ ...matchInformation, mat: e.target.value });
+                setMatchInformation({ ...matchInformation, mat: eTargetValue });
                 break;
             case "age":
                 {
-                    let zeroGender = Object.keys(categories[e.target.value])[0];
-                    let zeroStyle = Object.keys(categories[e.target.value][zeroGender])[0];
-                    let zeroWeight = categories[e.target.value][zeroGender][zeroStyle][0];
+                    let zeroGender = Object.keys(categories[eTargetValue])[0];
+                    let zeroStyle = Object.keys(categories[eTargetValue][zeroGender])[0];
+                    let zeroWeight = categories[eTargetValue][zeroGender][zeroStyle][0];
                     setMatchInformation(
                         {
                             ...matchInformation,
-                            age: e.target.value,
+                            age: eTargetValue,
                             gender: zeroGender,
                             style: zeroStyle,
                             weight: zeroWeight
@@ -252,12 +275,12 @@ const MatchInformation: React.VFC<MatchInformationProps> = ({ matchInformation, 
                 break;
             case "gender":
                 {
-                    let zeroStyle = Object.keys(categories[matchInformation.age][e.target.value])[0];
-                    let zeroWeight = categories[matchInformation.age][e.target.value][zeroStyle][0];
+                    let zeroStyle = Object.keys(categories[matchInformation.age][eTargetValue])[0];
+                    let zeroWeight = categories[matchInformation.age][eTargetValue][zeroStyle][0];
                     setMatchInformation(
                         {
                             ...matchInformation,
-                            gender: e.target.value,
+                            gender: eTargetValue,
                             style: zeroStyle,
                             weight: zeroWeight
                         });
@@ -265,11 +288,11 @@ const MatchInformation: React.VFC<MatchInformationProps> = ({ matchInformation, 
                 break;
             case "style":
                 {
-                    let zeroWeight = categories[matchInformation.age][matchInformation.gender][e.target.value][0];
+                    let zeroWeight = categories[matchInformation.age][matchInformation.gender][eTargetValue][0];
                     setMatchInformation(
                         {
                             ...matchInformation,
-                            style: e.target.value,
+                            style: eTargetValue,
                             weight: zeroWeight
                         });
                 }
@@ -278,7 +301,7 @@ const MatchInformation: React.VFC<MatchInformationProps> = ({ matchInformation, 
                 setMatchInformation(
                     {
                         ...matchInformation,
-                        weight: parseInt(e.target.value)
+                        weight: parseInt(eTargetValue)
                     });
                 break;
             default:
@@ -287,70 +310,70 @@ const MatchInformation: React.VFC<MatchInformationProps> = ({ matchInformation, 
     }
 
     return (
-        <div className="matchInformation">
-            <label htmlFor="mat-select">
-                Mat
-            <br />
-                <select
-                    onChange={e => updateDropDowns(e, "mat")}
-                    name="mat" id="mat-select">
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                </select>
-            </label>
+        <Paper className="matchInformation" elevation={3}>
+            <Grid container direction={"column"} spacing={3}>
+                <Grid item>
+                    <FormControl variant="outlined" style={{ width: "100%" }}>
+                        <InputLabel>Mat</InputLabel>
+                        <Select
+                            value={matchInformation.mat}
+                            onChange={e => updateDropDowns(e, "mat")}
+                            label="Mat">
+                            <MenuItem value="A">A</MenuItem>
+                            <MenuItem value="B">B</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Grid>
 
-            <label htmlFor="age-select">
-                Age
-            <br />
-                <select
-                    value={matchInformation.age}
-                    onChange={e =>
-                        updateDropDowns(e, "age")
-                    }
-                    name="age" id="age-select">
-                    {ageOptions}
-                </select>
-            </label>
+                <Grid item>
+                    <FormControl variant="outlined" style={{ width: "100%" }}>
+                        <InputLabel>Age</InputLabel>
+                        <Select
+                            value={matchInformation.age}
+                            onChange={e => updateDropDowns(e, "age")}
+                            label="Age">
+                            {ageOptions}
+                        </Select>
+                    </FormControl>
+                </Grid>
 
-            <label htmlFor="gender-select" style={matchInformation.gender === "N/A" ? { visibility: "hidden" } : {}}>
-                Gender
-            <br />
-                <select
-                    value={matchInformation.gender}
-                    onChange={e =>
-                        updateDropDowns(e, "gender")
-                    }
-                    name="gender" id="gender-select">
-                    {genderOptions}
-                </select>
-            </label>
+                <Grid item>
+                    <FormControl variant="outlined" style={{ width: "100%" }}>
+                        <InputLabel>Gender</InputLabel>
+                        <Select
+                            value={matchInformation.gender}
+                            onChange={e => updateDropDowns(e, "gender")}
+                            label="Gender">
+                            {genderOptions}
+                        </Select>
+                    </FormControl>
+                </Grid>
 
-            <label htmlFor="style-select" style={matchInformation.style === "N/A" ? { visibility: "hidden" } : {}}>
-                Style
-            <br />
-                <select
-                    value={matchInformation.style}
-                    onChange={e =>
-                        updateDropDowns(e, "style")
-                    }
-                    name="style" id="style-select">
-                    {styleOptions}
-                </select>
-            </label>
+                <Grid item>
+                    <FormControl variant="outlined" style={{ width: "100%" }}>
+                        <InputLabel>Style</InputLabel>
+                        <Select
+                            value={matchInformation.style}
+                            onChange={e => updateDropDowns(e, "style")}
+                            label="Style">
+                            {styleOptions}
+                        </Select>
+                    </FormControl>
+                </Grid>
 
-            <label htmlFor="weight-select">
-                Weight
-            <br />
-                <select
-                    value={matchInformation.weight}
-                    onChange={e =>
-                        updateDropDowns(e, "weight")
-                    }
-                    name="weight" id="weight-select">
-                    {weightOptions}
-                </select>
-            </label>
-        </div>
+                <Grid item>
+                    <FormControl variant="outlined" style={{ width: "100%" }}>
+                        <InputLabel>Weight</InputLabel>
+                        <Select
+                            value={matchInformation.weight}
+                            onChange={e => updateDropDowns(e, "weight")}
+                            label="Weight">
+                            {weightOptions}
+                        </Select>
+                    </FormControl>
+                </Grid>
+            </Grid>
+        </Paper>
     );
 
 };
@@ -364,8 +387,8 @@ const SubmitMatchDetails: React.VFC<SubmitMatchDetails> = ({ setDetails }) => {
     const [totalDisplayState, setTotalDisplayState] = totalDisplayMethod;
     return (
         <>
-            <button onClick={setDetails}>Confirm</button>
-            <button onClick={() => setTotalDisplayState({ ...totalDisplayState, playerEntryView: false })}>Cancel</button>
+            <Button onClick={setDetails}>Confirm</Button>
+            <Button onClick={() => setTotalDisplayState({ ...totalDisplayState, playerEntryView: false })}>Cancel</Button>
         </>
     );
 };

@@ -8,6 +8,7 @@ import { MainHeader } from './MainHeader';
 import { Navigation } from './Navigation';
 import { Scoreboard } from './Scoreboard';
 import { VictoryScreen } from './VictoryScreen';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 
 const initialTotalDisplayState: TotalDisplayState = {
   mainHeader: true,
@@ -97,14 +98,26 @@ const App: React.VFC = () => {
   console.log(matchState);
   console.log(matchPlayerInformation);
 
+  const theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: "rgba(255, 215, 0, 1)",
+      },
+      action: {
+        disabledBackground: "rgba(255, 215, 0, 0.5)",
+
+      }
+    }
+  });
+
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <MainHeader visibility={totalDisplayState.mainHeader} />
       <Navigation visibility={totalDisplayState.navigation} totalDisplayMethod={totalDisplayMethod} ResetCurrentMatch={ResetCurrentMatch} />
       <PlayerEntryView visibility={totalDisplayState.playerEntryView} totalDisplayMethod={totalDisplayMethod} matchStateMethod={matchStateMethod} matchPlayerInformationMethod={matchPlayerInformationMethod} />
       <Scoreboard visibility={totalDisplayState.scoreboard} matchPlayerInformationMethod={matchPlayerInformationMethod} matchStateMethod={matchStateMethod} timer={timer} Victory={Victory} />
       <VictoryScreen visibility={totalDisplayState.victoryScreen} victoryState={victoryState} SetVisibilityOf={SetVisibilityOf} />
-    </>
+    </ThemeProvider >
   );
 }
 

@@ -105,11 +105,6 @@ button.timer:disabled {
   border-bottom-right-radius: 30px;
 }
 
-.buttonsRow {
-  overflow: hidden;
-  white-space: nowrap;
-}
-
 .firstName,
 .clubName {
   font-size: min(3vw, 30pt);
@@ -173,8 +168,17 @@ button.timer:disabled {
 
 .points-control {
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+
+.buttonsRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 80%;
 }
 
 .playerData {
@@ -239,8 +243,9 @@ button.timer:disabled {
 
 .penalty {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 /*Iphone screen size */
@@ -257,15 +262,12 @@ button.timer:disabled {
     grid-template-rows: 40% 10% 1fr 1fr 1fr;
   }
 
-  .buttonsRow {
+  .points-control {
     display: flex;
     flex-wrap: wrap;
     overflow: initial;
     white-space: initial;
     justify-content: center;
-  }
-
-  .points-control button {
     font-size: 15pt;
   }
 
