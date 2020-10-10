@@ -5,16 +5,22 @@ type MatchState = {
     age: string,
     gender: string,
     style: string,
+    gameType:string,
     weight: number,
+    currentTime: string,
     playersSet: boolean,
     started: boolean,
+    paused: boolean,
+    phase: string
   };
 
   type MatchPlayer = {
     "playerColor": string,
     "firstName": string,
     "lastName": string,
-    "clubName": string
+    "clubName": string,
+    "warnings": number,
+    "score": number
   }
 
   type MatchPlayerInformation = {

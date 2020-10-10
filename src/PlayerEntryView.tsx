@@ -77,31 +77,35 @@ const ContextTotalDisplayMethod = React.createContext<TotalDisplayMethod>(undefi
 
 export const PlayerEntryView: React.VFC<PlayerEntryViewProps> = ({ visibility, totalDisplayMethod, matchStateMethod, matchPlayerInformationMethod }) => {
     //Store the state of the entered match information
-    const initalMatchInformation: MatchInformation = {
+    const initialMatchInformation: MatchInformation = {
         mat: "A",
         age: "6-7 yrs",
         gender: "N/A",
         style: "N/A",
         weight: 19
     };
-    const [matchInformation, setMatchInformation] = useState(initalMatchInformation);
+    const [matchInformation, setMatchInformation] = useState(initialMatchInformation);
     //Store the state of the entered player information
-    const initalPlayerEntries: { [playerColor: string]: MatchPlayer } = {
+    const initialPlayerEntries: { [playerColor: string]: MatchPlayer } = {
         "red": {
             "playerColor": "red",
             "firstName": "Red First Name",
             "lastName": "",
-            "clubName": ""
+            "clubName": "",
+            "warnings": 0,
+            "score": 0
         },
         "blue": {
             "playerColor": "blue",
             "firstName": "Blue First Name",
             "lastName": "",
-            "clubName": ""
+            "clubName": "",
+            "warnings": 0,
+            "score": 0
         }
     }
 
-    const [playerEntries, setPlayerEntries] = useState(initalPlayerEntries);
+    const [playerEntries, setPlayerEntries] = useState(initialPlayerEntries);
 
     const setDetails = () => {
         //set the matchInformation to the matchState, playerInformation from the App Component and close the playerEntryView
@@ -109,8 +113,31 @@ export const PlayerEntryView: React.VFC<PlayerEntryViewProps> = ({ visibility, t
         const [, setMatchPlayerInformation] = matchPlayerInformationMethod;
         const [totalDisplayState, setTotalDisplayState] = totalDisplayMethod;
 
+        //determine game type
+        const gameType = () => {
+            let gameType = "";
+            if (matchInformation.style === "Greco-Roman") {
+                gameType = "Senior Greco-Roman";
+            } else if (matchInformation.age === "18-20 yrs" || matchInformation.age === "21yrs+") {
+                gameType = "Senior Freestyle";
+            } else {
+                gameType = "Junior Freestyle";
+            }
+            return gameType;
+        }
 
-        setMatchState({ ...matchState, ...matchInformation, playersSet: true });
+        const theGameType = gameType();
+
+        let initialTimerValue = "";
+
+        if (theGameType === "Junior Freestyle") {
+            initialTimerValue = "2:00";
+        } else {
+            initialTimerValue = "3:00";
+        }
+
+
+        setMatchState({ ...matchState, ...matchInformation, playersSet: true, currentTime: initialTimerValue, gameType: theGameType });
         const copyPlayerEntries = { ...playerEntries };
         setMatchPlayerInformation(copyPlayerEntries);
         setTotalDisplayState({ ...totalDisplayState, playerEntryView: false });

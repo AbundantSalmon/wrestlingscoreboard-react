@@ -1,25 +1,24 @@
-//Maintain all control logic and interfaces for scorebaord in this file.
+//Maintain all control logic and interfaces for scoreboard in this file.
 
 import React from 'react';
 import './Scoreboard.css';
 
 
-
-
 type PointsControlProps = {
     playerColour: string;
+    updateScore: (player: string, score: number) => void;
 };
 
-export const PointsControl: React.VFC<PointsControlProps> = ({ playerColour }) => {
+export const PointsControl: React.VFC<PointsControlProps> = ({ playerColour, updateScore }) => {
 
     return (
         <div className={"points-control " + playerColour}>
             <div className={"buttonsRow " + playerColour}>
-                <button value={4}>+5</button>
-                <button value={3}>+4</button>
-                <button value={2}>+2</button>
-                <button value={1}>+1</button>
-                <button value={0}>-1</button>
+                <button onClick={() => updateScore(playerColour, 5)}>+5</button>
+                <button onClick={() => updateScore(playerColour, 4)}>+4</button>
+                <button onClick={() => updateScore(playerColour, 2)}>+2</button>
+                <button onClick={() => updateScore(playerColour, 1)}>+1</button>
+                <button onClick={() => updateScore(playerColour, -1)}>-1</button>
             </div>
         </div>
     )
