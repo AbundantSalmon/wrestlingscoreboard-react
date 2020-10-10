@@ -57,8 +57,10 @@ export const Scoreboard: React.VFC<ScoreboardProps> = ({ visibility, matchPlayer
         const allowableScoreChanges = [-1, 1, 2, 4, 5];
         if (allowableScoreChanges.includes(score) && matchState.started) {
             const newMatchPlayerInformation: { [playerColor: string]: MatchPlayer } = { ...matchPlayerInformation };
-            newMatchPlayerInformation[player].score += score;
-            setMatchPlayerInformation(newMatchPlayerInformation);
+            if (!(newMatchPlayerInformation[player].score === 0 && score < 0)) { //make sure score can't go below 0
+                newMatchPlayerInformation[player].score += score;
+                setMatchPlayerInformation(newMatchPlayerInformation);
+            }
         }
     };
 
