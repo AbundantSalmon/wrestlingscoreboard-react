@@ -1,22 +1,26 @@
 {
   "files": {
-    "main.css": "/wrestlingscoreboard-react/static/css/main.0102f8e0.chunk.css",
-    "main.js": "/wrestlingscoreboard-react/static/js/main.dea6e39a.chunk.js",
-    "main.js.map": "/wrestlingscoreboard-react/static/js/main.dea6e39a.chunk.js.map",
+    "main.css": "/wrestlingscoreboard-react/static/css/main.e5160ca8.chunk.css",
+    "main.js": "/wrestlingscoreboard-react/static/js/main.f4d3707d.chunk.js",
+    "main.js.map": "/wrestlingscoreboard-react/static/js/main.f4d3707d.chunk.js.map",
     "runtime-main.js": "/wrestlingscoreboard-react/static/js/runtime-main.c99e03b5.js",
     "runtime-main.js.map": "/wrestlingscoreboard-react/static/js/runtime-main.c99e03b5.js.map",
-    "static/js/2.d8cd06dd.chunk.js": "/wrestlingscoreboard-react/static/js/2.d8cd06dd.chunk.js",
-    "static/js/2.d8cd06dd.chunk.js.map": "/wrestlingscoreboard-react/static/js/2.d8cd06dd.chunk.js.map",
+    "static/css/2.245170f0.chunk.css": "/wrestlingscoreboard-react/static/css/2.245170f0.chunk.css",
+    "static/js/2.4fbae7db.chunk.js": "/wrestlingscoreboard-react/static/js/2.4fbae7db.chunk.js",
+    "static/js/2.4fbae7db.chunk.js.map": "/wrestlingscoreboard-react/static/js/2.4fbae7db.chunk.js.map",
     "index.html": "/wrestlingscoreboard-react/index.html",
-    "precache-manifest.e7dcf918b637a0a2467d9ea3f4925f08.js": "/wrestlingscoreboard-react/precache-manifest.e7dcf918b637a0a2467d9ea3f4925f08.js",
+    "precache-manifest.8aff56cd74bb0f3d797e8949d8bb30cf.js": "/wrestlingscoreboard-react/precache-manifest.8aff56cd74bb0f3d797e8949d8bb30cf.js",
     "service-worker.js": "/wrestlingscoreboard-react/service-worker.js",
-    "static/css/main.0102f8e0.chunk.css.map": "/wrestlingscoreboard-react/static/css/main.0102f8e0.chunk.css.map",
-    "static/js/2.d8cd06dd.chunk.js.LICENSE.txt": "/wrestlingscoreboard-react/static/js/2.d8cd06dd.chunk.js.LICENSE.txt"
+    "static/css/2.245170f0.chunk.css.map": "/wrestlingscoreboard-react/static/css/2.245170f0.chunk.css.map",
+    "static/css/main.e5160ca8.chunk.css.map": "/wrestlingscoreboard-react/static/css/main.e5160ca8.chunk.css.map",
+    "static/js/2.4fbae7db.chunk.js.LICENSE.txt": "/wrestlingscoreboard-react/static/js/2.4fbae7db.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/wrestlingscoreboard-react/static/media/roboto-vietnamese-400-normal.a8be5b46.woff2"
   },
   "entrypoints": [
     "static/js/runtime-main.c99e03b5.js",
-    "static/js/2.d8cd06dd.chunk.js",
-    "static/css/main.0102f8e0.chunk.css",
-    "static/js/main.dea6e39a.chunk.js"
+    "static/css/2.245170f0.chunk.css",
+    "static/js/2.4fbae7db.chunk.js",
+    "static/css/main.e5160ca8.chunk.css",
+    "static/js/main.f4d3707d.chunk.js"
   ]
 }

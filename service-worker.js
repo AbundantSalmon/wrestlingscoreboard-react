@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/wrestlingscoreboard-react/precache-manifest.e7dcf918b637a0a2467d9ea3f4925f08.js"
+  "/wrestlingscoreboard-react/precache-manifest.8aff56cd74bb0f3d797e8949d8bb30cf.js"
 );
 
 self.addEventListener('message', (event) => {
