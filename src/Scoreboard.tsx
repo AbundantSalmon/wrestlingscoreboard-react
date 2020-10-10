@@ -73,6 +73,17 @@ export const Scoreboard: React.VFC<ScoreboardProps> = ({ visibility, matchPlayer
         }
     }
 
+    const handleWarningButton = (playerColour: keyof MatchPlayerInformation) => {
+        if (matchPlayerInformation[playerColour].warnings < 2) {
+            let newMatchPlayerInformation = { ...matchPlayerInformation };
+            newMatchPlayerInformation[playerColour].warnings += 1;
+            setMatchPlayerInformation(newMatchPlayerInformation);
+        } else {
+            timer.pause();
+            Victory(Object.keys(matchPlayerInformation).filter((element) => element !== playerColour)[0], "Disqualification");
+        }
+    }
+
     return (
         <div id="outer">
             <div id="scoreboard" style={visibility ? {} : { visibility: "hidden" }}>
@@ -83,8 +94,8 @@ export const Scoreboard: React.VFC<ScoreboardProps> = ({ visibility, matchPlayer
                 <ScoreBox playerColour="blue" matchPlayerInformation={matchPlayerInformation} />
                 <PointsControl playerColour="red" updateScore={updateScore} />
                 <PointsControl playerColour="blue" updateScore={updateScore} />
-                <PenaltyControl playerColour="red" />
-                <PenaltyControl playerColour="blue" />
+                <PenaltyControl playerColour="red" handleWarningButton={handleWarningButton} />
+                <PenaltyControl playerColour="blue" handleWarningButton={handleWarningButton} />
                 <PinControl playerColour="red" handlePinButton={handlePinButton} />
                 <PinControl playerColour="blue" handlePinButton={handlePinButton} />
             </div>
@@ -169,10 +180,17 @@ type ScoreBoxProps = {
 };
 
 const ScoreBox: React.VFC<ScoreBoxProps> = ({ playerColour, matchPlayerInformation }) => {
-
+    const warningMarkers = () => {
+        let numberOfMarkers = matchPlayerInformation[playerColour].warnings;
+        let warningMarkerText = "";
+        for (let i = 0; i < numberOfMarkers; i++) {
+            warningMarkerText += "■";
+        }
+        return warningMarkerText;
+    }
     return (
         <div className={"scorebox " + playerColour}>
-            <div className={"markerWarning " + capitaliseString(playerColour)}></div>
+            <div className={"markerWarning " + capitaliseString(playerColour)}>{warningMarkers()}</div>
             <div className={"score " + capitaliseString(playerColour)}>{matchPlayerInformation[playerColour].score}</div>
             <div className={"shotclock " + capitaliseString(playerColour)}>0:00</div>
         </div>
