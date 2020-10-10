@@ -22,11 +22,40 @@ export const Scoreboard: React.VFC<ScoreboardProps> = ({ visibility, matchPlayer
     const [matchPlayerInformation, setMatchPlayerInformation] = matchPlayerInformationMethod;
     const [matchState, setMatchState] = matchStateMethod;
 
+    const updateScore = useCallback((player: string, score: number) => {
+        //Need to add if timer is running then allow this
+        const allowableScoreChanges = [-1, 1, 2, 4, 5];
+        if (allowableScoreChanges.includes(score) && matchState.started) {
+            const newMatchPlayerInformation: { [playerColor: string]: MatchPlayer } = { ...matchPlayerInformation };
+            if (!(newMatchPlayerInformation[player].score === 0 && score < 0)) { //make sure score can't go below 0
+                newMatchPlayerInformation[player].score += score;
+                setMatchPlayerInformation(newMatchPlayerInformation);
+                if (matchState.shotClockOn && score > 0) {
+                    setMatchState({ ...matchState, shotClockOn: false });
+                }
+                checkVictoryState(matchPlayerInformation, matchState, timer, Victory);
+            }
+        }
+    }, [Victory, matchPlayerInformation, matchState, setMatchPlayerInformation, setMatchState, timer]);
+
+    const handlePinButton = (playerColour: string) => {
+        if (matchState.started) {
+            timer.pause();
+            Victory(playerColour, "Fall");
+        }
+    }
+
     const updateCurrentTime = useCallback(
         () => {
             setMatchState({ ...matchState, currentTime: timer.getTimeValues().toString(['minutes', 'seconds']).slice(1) });
+            if (matchState.shotClockOn) {
+                if (timer.getTotalTimeValues().seconds - matchState.shotClockSeconds === 0) {
+                    setMatchState({ ...matchState, shotClockOn: false });
+                    updateScore(Object.keys(matchPlayerInformation).filter((key) => key !== matchState.shotClockPlayer)[0], 1)
+                }
+            }
         },
-        [matchState, setMatchState, timer],
+        [matchPlayerInformation, matchState, setMatchState, timer, updateScore],
     );
 
     const resolveTimerEnd = useCallback(
@@ -53,26 +82,6 @@ export const Scoreboard: React.VFC<ScoreboardProps> = ({ visibility, matchPlayer
         };
     }, [resolveTimerEnd, timer, updateCurrentTime]);
 
-    const updateScore = (player: string, score: number) => {
-        //Need to add if timer is running then allow this
-        const allowableScoreChanges = [-1, 1, 2, 4, 5];
-        if (allowableScoreChanges.includes(score) && matchState.started) {
-            const newMatchPlayerInformation: { [playerColor: string]: MatchPlayer } = { ...matchPlayerInformation };
-            if (!(newMatchPlayerInformation[player].score === 0 && score < 0)) { //make sure score can't go below 0
-                newMatchPlayerInformation[player].score += score;
-                setMatchPlayerInformation(newMatchPlayerInformation);
-                checkVictoryState(matchPlayerInformation, matchState, timer, Victory);
-            }
-        }
-    };
-
-    const handlePinButton = (playerColour: string) => {
-        if (matchState.started) {
-            timer.pause();
-            Victory(playerColour, "Fall");
-        }
-    }
-
     const handleWarningButton = (playerColour: keyof MatchPlayerInformation) => {
         if (matchPlayerInformation[playerColour].warnings < 2) {
             let newMatchPlayerInformation = { ...matchPlayerInformation };
@@ -84,18 +93,27 @@ export const Scoreboard: React.VFC<ScoreboardProps> = ({ visibility, matchPlayer
         }
     }
 
+    const handleShotClockButton = (playerColour: keyof MatchPlayerInformation) => {
+        console.log(matchState.started + " " + !matchState.shotClockOn + " " + timer.getTotalTimeValues().seconds);
+        if (matchState.started && !matchState.shotClockOn && timer.getTotalTimeValues().seconds >= 30) {
+            if (matchState.phase === phases[1] || matchState.phase === phases[5]) {
+                setMatchState({ ...matchState, shotClockOn: true, shotClockPlayer: playerColour, shotClockSeconds: timer.getTotalTimeValues().seconds - 30 })
+            }
+        }
+    }
+
     return (
         <div id="outer">
             <div id="scoreboard" style={visibility ? {} : { visibility: "hidden" }}>
                 <PlayerDataView playerColour="red" matchPlayerInformation={matchPlayerInformation} />
                 <MiddleView matchState={matchState} setMatchState={setMatchState} timer={timer} matchPlayerInformation={matchPlayerInformation} Victory={Victory} />
                 <PlayerDataView playerColour="blue" matchPlayerInformation={matchPlayerInformation} />
-                <ScoreBox playerColour="red" matchPlayerInformation={matchPlayerInformation} />
-                <ScoreBox playerColour="blue" matchPlayerInformation={matchPlayerInformation} />
+                <ScoreBox playerColour="red" matchPlayerInformation={matchPlayerInformation} matchState={matchState} timer={timer} />
+                <ScoreBox playerColour="blue" matchPlayerInformation={matchPlayerInformation} matchState={matchState} timer={timer} />
                 <PointsControl playerColour="red" updateScore={updateScore} />
                 <PointsControl playerColour="blue" updateScore={updateScore} />
-                <PenaltyControl playerColour="red" handleWarningButton={handleWarningButton} />
-                <PenaltyControl playerColour="blue" handleWarningButton={handleWarningButton} />
+                <PenaltyControl playerColour="red" handleWarningButton={handleWarningButton} handleShotClockButton={handleShotClockButton} />
+                <PenaltyControl playerColour="blue" handleWarningButton={handleWarningButton} handleShotClockButton={handleShotClockButton} />
                 <PinControl playerColour="red" handlePinButton={handlePinButton} />
                 <PinControl playerColour="blue" handlePinButton={handlePinButton} />
             </div>
@@ -177,9 +195,11 @@ const PlayerDataView: React.VFC<PlayerDataViewProps> = ({ playerColour, matchPla
 type ScoreBoxProps = {
     playerColour: string;
     matchPlayerInformation: { [playerColor: string]: MatchPlayer };
+    matchState: MatchState;
+    timer: Timer;
 };
 
-const ScoreBox: React.VFC<ScoreBoxProps> = ({ playerColour, matchPlayerInformation }) => {
+const ScoreBox: React.VFC<ScoreBoxProps> = ({ playerColour, matchPlayerInformation, matchState, timer }) => {
     const warningMarkers = () => {
         let numberOfMarkers = matchPlayerInformation[playerColour].warnings;
         let warningMarkerText = "";
@@ -192,8 +212,8 @@ const ScoreBox: React.VFC<ScoreBoxProps> = ({ playerColour, matchPlayerInformati
         <div className={"scorebox " + playerColour}>
             <div className={"markerWarning " + capitaliseString(playerColour)}>{warningMarkers()}</div>
             <div className={"score " + capitaliseString(playerColour)}>{matchPlayerInformation[playerColour].score}</div>
-            <div className={"shotclock " + capitaliseString(playerColour)}>0:00</div>
-        </div>
+            <div className={"shotclock " + capitaliseString(playerColour)} style={(matchState.shotClockOn && matchState.shotClockPlayer === playerColour) ? { visibility: "visible" } : {}}>{timer.getTotalTimeValues().seconds - matchState.shotClockSeconds}</div>
+        </div >
     )
 };
 
@@ -220,7 +240,7 @@ const checkVictoryState = (matchPlayerInformation: MatchPlayerInformation, match
     if (matchState.phase === phases[6]) {
         if (matchPlayerInformation.blue.score === matchPlayerInformation.red.score) {
             Victory("draw", "Points");
-            console.log("Outcome is draw");
+            console.log("Outcome is Draw");
         } else if (matchPlayerInformation.blue.score - matchPlayerInformation.red.score > 0) {
             Victory("blue", "Points");
         } else {

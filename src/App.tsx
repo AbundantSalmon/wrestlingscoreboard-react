@@ -46,7 +46,10 @@ const initialMatchState: MatchState = {
   playersSet: false,
   started: false,
   paused: false,
-  phase: "Before Match"
+  phase: "Before Match",
+  shotClockOn: false,
+  shotClockSeconds: 0,
+  shotClockPlayer: "red",
 };
 
 const initialVictoryState: VictoryState = {

@@ -12,7 +12,10 @@ type MatchState = {
     playersSet: boolean,
     started: boolean,
     paused: boolean,
-    phase: string
+    phase: string,
+    shotClockOn: boolean,
+    shotClockSeconds: number,
+    shotClockPlayer: keyof MatchPlayerInformation
   };
 
   type MatchPlayer = {

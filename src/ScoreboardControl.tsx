@@ -26,13 +26,14 @@ export const PointsControl: React.VFC<PointsControlProps> = ({ playerColour, upd
 type PenaltyControlProps = {
     playerColour: keyof MatchPlayerInformation;
     handleWarningButton: (playerColour: keyof MatchPlayerInformation) => void;
+    handleShotClockButton: (playerColour: keyof MatchPlayerInformation) => void;
 };
 
-export const PenaltyControl: React.VFC<PenaltyControlProps> = ({ playerColour, handleWarningButton }) => {
+export const PenaltyControl: React.VFC<PenaltyControlProps> = ({ playerColour, handleWarningButton, handleShotClockButton }) => {
 
     return (
         <div className={"penalty " + playerColour}>
-            <button className="shotclockbtn" id={"shotclockbutton" + playerColour}>Shot clock</button>
+            <button className="shotclockbtn" id={"shotclockbutton" + playerColour} onClick={() => handleShotClockButton(playerColour)}>Shot clock</button>
             <button className="warning" onClick={() => handleWarningButton(playerColour)}>Warning</button>
         </div>
     )
