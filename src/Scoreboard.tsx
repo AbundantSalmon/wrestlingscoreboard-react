@@ -31,11 +31,11 @@ export const Scoreboard: React.VFC<ScoreboardProps> = ({ visibility, matchPlayer
     const resolveTimerEnd = useCallback(
         () => {
             if (matchState.phase === phases[1]) { //end of first period
-                setMatchState({ ...matchState, phase: phases[2], currentTime: "0:00" });
+                setMatchState({ ...matchState, phase: phases[2], currentTime: "0:00", paused: true });
             } else if (matchState.phase === phases[3]) { //end of rest period
-                setMatchState({ ...matchState, phase: phases[4], currentTime: "0:00" });
+                setMatchState({ ...matchState, phase: phases[4], currentTime: "0:00", paused: true });
             } else if (matchState.phase === phases[5]) { //end of second period
-                setMatchState({ ...matchState, phase: phases[6], currentTime: "0:00" });
+                setMatchState({ ...matchState, phase: phases[6], currentTime: "0:00", paused: true });
             }
         },
         [matchState, setMatchState],
@@ -101,12 +101,12 @@ const MiddleView: React.VFC<MiddleViewProps> = ({ matchState, timer, setMatchSta
             setMatchState({ ...matchState, phase: phases[1], started: true });
             timer.start({ countdown: true, startValues: { seconds: initialTimerValue } });
         } else if (matchState.phase === phases[2] && matchState.started) { //if between phase but before timer start
-            setMatchState({ ...matchState, phase: phases[3] })
+            setMatchState({ ...matchState, phase: phases[3], paused: false })
             timer.start({ countdown: true, startValues: { seconds: timeRest } });
         } else if (matchState.phase === phases[4] && matchState.started) { //if period 2 but before timer start
-            setMatchState({ ...matchState, phase: phases[5] })
+            setMatchState({ ...matchState, phase: phases[5], paused: false })
             timer.start({ countdown: true, startValues: { seconds: initialTimerValue } });
-        } else if (matchState.phase === phases[6] && matchState.started) { //if period 2 but before timer start
+        } else if (matchState.phase === phases[6] && matchState.started) { //if end of period 2
             console.log(`Match has ended`)
         } else if (matchState.started && !matchState.paused) { //pause
             setMatchState({ ...matchState, paused: true })
