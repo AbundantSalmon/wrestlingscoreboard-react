@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "558f91f0da4ed5f74900409b61fdde04",
+    "revision": "415e8d814ddbab7c1d40a3faaf166d41",
     "url": "/wrestlingscoreboard-react/index.html"
   },
   {
-    "revision": "4c29344eb84c3841f361",
+    "revision": "042e1979d752ec820422",
     "url": "/wrestlingscoreboard-react/static/css/main.0102f8e0.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/wrestlingscoreboard-react/static/js/2.d8cd06dd.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "4c29344eb84c3841f361",
-    "url": "/wrestlingscoreboard-react/static/js/main.e7d9eb5e.chunk.js"
+    "revision": "042e1979d752ec820422",
+    "url": "/wrestlingscoreboard-react/static/js/main.dea6e39a.chunk.js"
   },
   {
     "revision": "a42777c6133297c9be38",
