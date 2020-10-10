@@ -66,6 +66,13 @@ export const Scoreboard: React.VFC<ScoreboardProps> = ({ visibility, matchPlayer
         }
     };
 
+    const handlePinButton = (playerColour: string) => {
+        if (matchState.started) {
+            timer.pause();
+            Victory(playerColour, "Fall");
+        }
+    }
+
     return (
         <div id="outer">
             <div id="scoreboard" style={visibility ? {} : { visibility: "hidden" }}>
@@ -78,8 +85,8 @@ export const Scoreboard: React.VFC<ScoreboardProps> = ({ visibility, matchPlayer
                 <PointsControl playerColour="blue" updateScore={updateScore} />
                 <PenaltyControl playerColour="red" />
                 <PenaltyControl playerColour="blue" />
-                <PinControl playerColour="red" />
-                <PinControl playerColour="blue" />
+                <PinControl playerColour="red" handlePinButton={handlePinButton} />
+                <PinControl playerColour="blue" handlePinButton={handlePinButton} />
             </div>
         </div>
     )
