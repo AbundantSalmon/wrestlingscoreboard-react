@@ -54,7 +54,7 @@ const initialMatchState: MatchState = {
 
 const initialVictoryState: VictoryState = {
   playerName: "",
-  playerColour: "",
+  playerColour: "red",
   reason: ""
 };
 
@@ -87,8 +87,8 @@ const App: React.VFC = () => {
     }
   }
 
-  const SetVisibilityOf = (component: string, state: boolean) => {
-    const newTotalDisplayState: { [value: string]: boolean } = { ...totalDisplayState };
+  const SetVisibilityOf = (component: keyof TotalDisplayState, state: boolean) => {
+    const newTotalDisplayState = { ...totalDisplayState };
     newTotalDisplayState[component] = state;
     setTotalDisplayState(newTotalDisplayState as TotalDisplayState);
   };

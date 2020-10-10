@@ -22,11 +22,11 @@ export const Scoreboard: React.VFC<ScoreboardProps> = ({ visibility, matchPlayer
     const [matchPlayerInformation, setMatchPlayerInformation] = matchPlayerInformationMethod;
     const [matchState, setMatchState] = matchStateMethod;
 
-    const updateScore = useCallback((player: string, score: number) => {
+    const updateScore = useCallback((player: keyof MatchPlayerInformation, score: number) => {
         //Need to add if timer is running then allow this
         const allowableScoreChanges = [-1, 1, 2, 4, 5];
         if (allowableScoreChanges.includes(score) && matchState.started) {
-            const newMatchPlayerInformation: { [playerColor: string]: MatchPlayer } = { ...matchPlayerInformation };
+            const newMatchPlayerInformation = { ...matchPlayerInformation };
             if (!(newMatchPlayerInformation[player].score === 0 && score < 0)) { //make sure score can't go below 0
                 newMatchPlayerInformation[player].score += score;
                 setMatchPlayerInformation(newMatchPlayerInformation);
@@ -51,7 +51,7 @@ export const Scoreboard: React.VFC<ScoreboardProps> = ({ visibility, matchPlayer
             if (matchState.shotClockOn) {
                 if (timer.getTotalTimeValues().seconds - matchState.shotClockSeconds === 0) {
                     setMatchState({ ...matchState, shotClockOn: false });
-                    updateScore(Object.keys(matchPlayerInformation).filter((key) => key !== matchState.shotClockPlayer)[0], 1)
+                    updateScore(Object.keys(matchPlayerInformation).filter((key) => key !== matchState.shotClockPlayer)[0] as keyof MatchPlayerInformation, 1)
                 }
             }
         },
@@ -177,8 +177,8 @@ const MiddleView: React.VFC<MiddleViewProps> = ({ matchState, timer, setMatchSta
 };
 
 type PlayerDataViewProps = {
-    playerColour: string;
-    matchPlayerInformation: { [playerColor: string]: MatchPlayer };
+    playerColour: keyof MatchPlayerInformation;
+    matchPlayerInformation: MatchPlayerInformation;
 };
 
 const PlayerDataView: React.VFC<PlayerDataViewProps> = ({ playerColour, matchPlayerInformation }) => {
@@ -193,8 +193,8 @@ const PlayerDataView: React.VFC<PlayerDataViewProps> = ({ playerColour, matchPla
 };
 
 type ScoreBoxProps = {
-    playerColour: string;
-    matchPlayerInformation: { [playerColor: string]: MatchPlayer };
+    playerColour: keyof MatchPlayerInformation;
+    matchPlayerInformation: MatchPlayerInformation;
     matchState: MatchState;
     timer: Timer;
 };

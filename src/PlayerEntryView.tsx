@@ -86,7 +86,7 @@ export const PlayerEntryView: React.VFC<PlayerEntryViewProps> = ({ visibility, t
     };
     const [matchInformation, setMatchInformation] = useState(initialMatchInformation);
     //Store the state of the entered player information
-    const initialPlayerEntries: { [playerColor: string]: MatchPlayer } = {
+    const initialPlayerEntries: MatchPlayerInformation = {
         "red": {
             "playerColor": "red",
             "firstName": "Red First Name",
@@ -181,9 +181,9 @@ export const PlayerEntryView: React.VFC<PlayerEntryViewProps> = ({ visibility, t
 };
 
 type PlayerEntryProps = {
-    playerColour: string;
-    playerEntries: { [playerColor: string]: MatchPlayer };
-    setPlayerEntries: React.Dispatch<React.SetStateAction<{ [playerColor: string]: MatchPlayer }>>;
+    playerColour: keyof MatchPlayerInformation;
+    playerEntries: MatchPlayerInformation;
+    setPlayerEntries: React.Dispatch<React.SetStateAction<MatchPlayerInformation>>;
 }
 
 const PlayerEntry: React.VFC<PlayerEntryProps> = ({ playerColour, playerEntries, setPlayerEntries }) => {
@@ -194,7 +194,7 @@ const PlayerEntry: React.VFC<PlayerEntryProps> = ({ playerColour, playerEntries,
                 <input type="text" value={playerEntries[playerColour].firstName} onChange={e => {
                     const newPlayerEntry = { ...playerEntries };
                     newPlayerEntry[playerColour].firstName = e.target.value;
-                    setPlayerEntries(newPlayerEntry as MatchPlayerInformation);
+                    setPlayerEntries(newPlayerEntry);
                 }} />
             </label>
             <label>
@@ -202,7 +202,7 @@ const PlayerEntry: React.VFC<PlayerEntryProps> = ({ playerColour, playerEntries,
                 <input type="text" value={playerEntries[playerColour].lastName} onChange={e => {
                     const newPlayerEntry = { ...playerEntries };
                     newPlayerEntry[playerColour].lastName = e.target.value;
-                    setPlayerEntries(newPlayerEntry as MatchPlayerInformation);
+                    setPlayerEntries(newPlayerEntry);
                 }} />
             </label>
             <label>
@@ -210,7 +210,7 @@ const PlayerEntry: React.VFC<PlayerEntryProps> = ({ playerColour, playerEntries,
                 <input type="text" value={playerEntries[playerColour].clubName} onChange={e => {
                     const newPlayerEntry = { ...playerEntries };
                     newPlayerEntry[playerColour].clubName = e.target.value;
-                    setPlayerEntries(newPlayerEntry as MatchPlayerInformation);
+                    setPlayerEntries(newPlayerEntry);
                 }} />
             </label>
         </div>

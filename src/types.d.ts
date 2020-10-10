@@ -19,7 +19,7 @@ type MatchState = {
   };
 
   type MatchPlayer = {
-    "playerColor": string,
+    "playerColor": keyof MatchPlayerInformation,
     "firstName": string,
     "lastName": string,
     "clubName": string,

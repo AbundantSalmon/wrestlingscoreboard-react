@@ -4,8 +4,8 @@ import React from 'react';
 import './Scoreboard.css';
 
 type PointsControlProps = {
-    playerColour: string;
-    updateScore: (player: string, score: number) => void;
+    playerColour: keyof MatchPlayerInformation;
+    updateScore: (player: keyof MatchPlayerInformation, score: number) => void;
 };
 
 export const PointsControl: React.VFC<PointsControlProps> = ({ playerColour, updateScore }) => {
@@ -40,8 +40,8 @@ export const PenaltyControl: React.VFC<PenaltyControlProps> = ({ playerColour, h
 };
 
 type PinControlProps = {
-    playerColour: string;
-    handlePinButton: (playerColour: string) => void;
+    playerColour: keyof MatchPlayerInformation;
+    handlePinButton: (playerColour: keyof MatchPlayerInformation) => void;
 };
 
 export const PinControl: React.VFC<PinControlProps> = ({ playerColour, handlePinButton }) => {

@@ -4,7 +4,7 @@ import './VictoryScreen.css';
 type VictoryScreenProps = {
     visibility: boolean;
     victoryState: VictoryState;
-    SetVisibilityOf: (component: string, state: boolean) => void;
+    SetVisibilityOf: (component: keyof TotalDisplayState, state: boolean) => void;
 };
 
 export const VictoryScreen: React.VFC<VictoryScreenProps> = ({ visibility, victoryState, SetVisibilityOf }) => {
