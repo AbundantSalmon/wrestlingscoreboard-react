@@ -1,18 +1,26 @@
 # Wrestling Scoreboard in React
+
 This is the [dyota257/wrestlingscoreboard](https://github.com/dyota257/wrestlingscoreboard) reimplemented with react.
 
 Current "working" deployment: https://abundantsalmon.github.io/wrestlingscoreboard-react/
 
+## Todo
+
+[] PlayerEntryView textfield input and submission validation
+[] Add buzzer sound
+
 ## Built With
 
-
 ## Installation
+
 TBA
 
 ## Usage
+
 TBA
 
 ## create-react-app Instructions:
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ### Available Scripts
