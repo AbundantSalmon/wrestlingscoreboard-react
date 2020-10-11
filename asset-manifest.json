@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/wrestlingscoreboard-react/static/css/main.e5160ca8.chunk.css",
-    "main.js": "/wrestlingscoreboard-react/static/js/main.f4d3707d.chunk.js",
-    "main.js.map": "/wrestlingscoreboard-react/static/js/main.f4d3707d.chunk.js.map",
+    "main.js": "/wrestlingscoreboard-react/static/js/main.884f5039.chunk.js",
+    "main.js.map": "/wrestlingscoreboard-react/static/js/main.884f5039.chunk.js.map",
     "runtime-main.js": "/wrestlingscoreboard-react/static/js/runtime-main.c99e03b5.js",
     "runtime-main.js.map": "/wrestlingscoreboard-react/static/js/runtime-main.c99e03b5.js.map",
     "static/css/2.245170f0.chunk.css": "/wrestlingscoreboard-react/static/css/2.245170f0.chunk.css",
     "static/js/2.4fbae7db.chunk.js": "/wrestlingscoreboard-react/static/js/2.4fbae7db.chunk.js",
     "static/js/2.4fbae7db.chunk.js.map": "/wrestlingscoreboard-react/static/js/2.4fbae7db.chunk.js.map",
     "index.html": "/wrestlingscoreboard-react/index.html",
-    "precache-manifest.8aff56cd74bb0f3d797e8949d8bb30cf.js": "/wrestlingscoreboard-react/precache-manifest.8aff56cd74bb0f3d797e8949d8bb30cf.js",
+    "precache-manifest.33674c7fc74be0b52accce03427ecaa2.js": "/wrestlingscoreboard-react/precache-manifest.33674c7fc74be0b52accce03427ecaa2.js",
     "service-worker.js": "/wrestlingscoreboard-react/service-worker.js",
     "static/css/2.245170f0.chunk.css.map": "/wrestlingscoreboard-react/static/css/2.245170f0.chunk.css.map",
     "static/css/main.e5160ca8.chunk.css.map": "/wrestlingscoreboard-react/static/css/main.e5160ca8.chunk.css.map",
@@ -21,6 +21,6 @@
     "static/css/2.245170f0.chunk.css",
     "static/js/2.4fbae7db.chunk.js",
     "static/css/main.e5160ca8.chunk.css",
-    "static/js/main.f4d3707d.chunk.js"
+    "static/js/main.884f5039.chunk.js"
   ]
 }
