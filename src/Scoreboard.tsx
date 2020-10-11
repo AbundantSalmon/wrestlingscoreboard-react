@@ -163,7 +163,7 @@ const MiddleView: React.VFC<MiddleViewProps> = ({ matchState, timer, setMatchSta
     return (
         <div className="middle" style={matchState.paused ? { backgroundColor: "grey" } : {}}>
             <span id="period">{matchState.phase}</span><br />
-            <span id="gameType">{`${matchState.gameType}, ${matchState.age}, ${matchState.weight}kg`}</span>
+            <span id="gameType" style={matchState.gameType === "" ? { visibility: "hidden" } : {}}>{`${matchState.gameType}, ${matchState.age}, ${matchState.weight}kg`}</span>
             <br />
             <span id="timer">{matchState.currentTime}</span>
             <br />

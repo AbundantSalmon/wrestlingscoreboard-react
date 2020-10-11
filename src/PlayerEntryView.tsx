@@ -90,7 +90,7 @@ export const PlayerEntryView: React.VFC<PlayerEntryViewProps> = ({ visibility, t
     const initialPlayerEntries: MatchPlayerInformation = {
         "red": {
             "playerColor": "red",
-            "firstName": "Red First Name",
+            "firstName": "",
             "lastName": "",
             "clubName": "",
             "warnings": 0,
@@ -98,7 +98,7 @@ export const PlayerEntryView: React.VFC<PlayerEntryViewProps> = ({ visibility, t
         },
         "blue": {
             "playerColor": "blue",
-            "firstName": "Blue First Name",
+            "firstName": "",
             "lastName": "",
             "clubName": "",
             "warnings": 0,
@@ -211,21 +211,21 @@ const PlayerEntry: React.VFC<PlayerEntryProps> = ({ playerColour, playerEntries,
                     {capitaliseString(playerColour)}
                 </Grid>
                 <Grid item>
-                    <TextField label={capitaliseString(playerColour) + "'s First Name"} variant="outlined" value={playerEntries[playerColour].firstName} onChange={e => {
+                    <TextField required label={capitaliseString(playerColour) + "'s First Name"} variant="outlined" value={playerEntries[playerColour].firstName} onChange={e => {
                         const newPlayerEntry = { ...playerEntries };
                         newPlayerEntry[playerColour].firstName = e.target.value;
                         setPlayerEntries(newPlayerEntry);
                     }} />
                 </Grid>
                 <Grid item>
-                    <TextField label={capitaliseString(playerColour) + "'s Last Name"} variant="outlined" value={playerEntries[playerColour].lastName} onChange={e => {
+                    <TextField required label={capitaliseString(playerColour) + "'s Last Name"} variant="outlined" value={playerEntries[playerColour].lastName} onChange={e => {
                         const newPlayerEntry = { ...playerEntries };
                         newPlayerEntry[playerColour].lastName = e.target.value;
                         setPlayerEntries(newPlayerEntry);
                     }} />
                 </Grid>
                 <Grid item>
-                    <TextField label={capitaliseString(playerColour) + "'s Club Name"} variant="outlined" value={playerEntries[playerColour].clubName} onChange={e => {
+                    <TextField required label={capitaliseString(playerColour) + "'s Club Name"} variant="outlined" value={playerEntries[playerColour].clubName} onChange={e => {
                         const newPlayerEntry = { ...playerEntries };
                         newPlayerEntry[playerColour].clubName = e.target.value;
                         setPlayerEntries(newPlayerEntry);
@@ -338,7 +338,7 @@ const MatchInformation: React.VFC<MatchInformationProps> = ({ matchInformation, 
                 </Grid>
 
                 <Grid item>
-                    <FormControl variant="outlined" style={{ width: "100%" }}>
+                    <FormControl variant="outlined" style={matchInformation.gender === "N/A" ? { visibility: "hidden" } : { width: "100%" }}>
                         <InputLabel>Gender</InputLabel>
                         <Select
                             value={matchInformation.gender}
@@ -350,7 +350,7 @@ const MatchInformation: React.VFC<MatchInformationProps> = ({ matchInformation, 
                 </Grid>
 
                 <Grid item>
-                    <FormControl variant="outlined" style={{ width: "100%" }}>
+                    <FormControl variant="outlined" style={matchInformation.style === "N/A" ? { visibility: "hidden" } : { width: "100%" }}>
                         <InputLabel>Style</InputLabel>
                         <Select
                             value={matchInformation.style}
